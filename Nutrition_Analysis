@@ -1,0 +1,29 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+import seaborn as sns
+
+# pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
+pd.set_option('display.width', 150)
+
+
+df = pd.read_csv('Pandas-practice/meal_tracker.tsv', sep='\t')
+
+print(df.head())
+print(df.info())
+
+# Avg calories per meal vs total calories
+avg = df.groupby('Date')['Calories'].mean()
+total = df.groupby('Date')['Calories'].sum()
+
+print(avg.array, avg.info())
+
+fig, ax = plt.subplots()
+ax.bar(total.index, total.values)
+ax.bar(avg.index, avg.values)
+ax.set_xlabel('Date')
+ax.set_ylabel('Calories')
+ax.set_title('Daily average calories per meal')
+plt.show()
